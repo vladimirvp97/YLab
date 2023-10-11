@@ -77,7 +77,11 @@ public class ConsoleApp {
             }
         }
     }
-
+    /**
+     * Регистрирует нового игрока в системе.
+     * Получает имя пользователя, пароль и начальный баланс через обработчик ввода.
+     * Проверяет доступность имени пользователя перед регистрацией.
+     */
     private void registerPlayer() {
         String name = inputHandler.readUsername();
         if (playerService.checkName(name)) {
@@ -90,7 +94,10 @@ public class ConsoleApp {
         playerService.register(name, pass, amount);
         outputHandler.showMessage("User successfully registered.");
     }
-
+    /**
+     * Аутентифицирует игрока в системе.
+     * Получает имя пользователя и пароль через обработчик ввода и проверяет их.
+     */
     private void authenticatePlayer() {
         String name = inputHandler.readUsername();
         String pass = inputHandler.readPassword();
@@ -101,7 +108,10 @@ public class ConsoleApp {
             outputHandler.showMessage("Authentication failed!");
         }
     }
-
+    /**
+     * Зачисляет средства на счет авторизованного игрока.
+     * Проверяет, был ли игрок аутентифицирован перед транзакцией.
+     */
     private void creditAccount() {
         if (authenticatedPlayer == null) {
             outputHandler.showMessage("You were not logged in");
@@ -116,7 +126,10 @@ public class ConsoleApp {
             outputHandler.showMessage("Transaction error, please try again.");
         }
     }
-
+    /**
+     * Снимает средства со счета авторизованного игрока.
+     * Проверяет, был ли игрок аутентифицирован и достаточно ли средств на счете перед транзакцией.
+     */
     private void debitAccount() {
         if (authenticatedPlayer == null) {
             outputHandler.showMessage("You were not logged in");
@@ -135,7 +148,10 @@ public class ConsoleApp {
             outputHandler.showMessage("Transaction error, please try again.");
         }
     }
-
+    /**
+     * Отображает историю транзакций для авторизованного игрока.
+     * Проверяет, был ли игрок аутентифицирован перед отображением истории.
+     */
     private void showTransactionHistory() {
         if (authenticatedPlayer == null) {
             outputHandler.showMessage("You were not logged in");
@@ -144,11 +160,17 @@ public class ConsoleApp {
         List<Transaction> transactions = transactionService.getTransactionHistory(authenticatedPlayer.getId());
         outputHandler.showTransactionHistory(transactions);
     }
-
+    /**
+     * Завершает выполнение приложения.
+     * Выводит прощальное сообщение пользователю.
+     */
     private void exitApplication() {
         outputHandler.showMessage("Goodbye!");
     }
-
+    /**
+     * Проверяет и отображает баланс авторизованного игрока.
+     * Проверяет, был ли игрок аутентифицирован перед проверкой баланса.
+     */
     private void checkBalance() {
         if (authenticatedPlayer == null) {
             outputHandler.showMessage("You were not logged in");
